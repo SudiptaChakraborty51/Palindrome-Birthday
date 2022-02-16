@@ -6,3 +6,10 @@ function reverseStr(str){
     return str.split('').reverse().join('');
 }
 console.log(reverseStr('sudipta'));
+
+function isPalindrome(str){
+    var reversedStr = reverseStr(str);
+    return str === reversedStr;
+}
+console.log(isPalindrome('madam'));
+
