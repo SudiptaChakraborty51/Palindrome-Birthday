@@ -68,7 +68,7 @@ function checkPalindromeForAllDateFormats(date){
 console.log(checkPalindromeForAllDateFormats(date));
 
 function leapYear(year){
-    if((year % 4 === 0) && (year % 100 !== 0) || (year % 4 == 0)){
+    if(((year % 4 === 0) && (year % 100 !== 0)) || (year % 4 == 0)){
         return true;
     } else{
         return false;
@@ -122,5 +122,35 @@ function getNextPalindromeDate(date){
     }
     return [count, nextDate];
 }
-
 console.log(getNextPalindromeDate(date));
+
+var dobInputRef = document.querySelector('#dob-input');
+var showBtnRef = document.querySelector('#show-btn');
+var resultRef = document.querySelector('#result');
+var errorRef = document.querySelector('#error');
+
+showBtnRef.addEventListener('click', clickHandler);
+
+function clickHandler(e){
+    var dobStr = dobInputRef.value;
+    if(dobStr !== ''){
+        errorRef.style.display = "none";
+        resultRef.style,display = "block";
+        var listOfDate = dobStr.split('-');
+        var date = {
+            day: Number(listOfDate[2]),
+            month: Number(listOfDate[1]),
+            year: Number(listOfDate[0])
+        };
+        if(checkPalindromeForAllDateFormats(date)){
+            resultRef.innerText = "Yay! Your Birthday is a Palindrome!!🤩";
+        } else {
+            var [count, nextDate] = getNextPalindromeDate(date);
+            resultRef.innerText = `The next Palindrome date is ${nextDate.day}-${nextDate.month}-${nextDate.year}, you missed it by ${count} days!😔`;
+        }
+    } else{
+        errorRef.style.display = "block";
+        resultRef.style,display = "none";
+        errorRef.innerText = "Please enter the date of birth!";
+    }
+}
