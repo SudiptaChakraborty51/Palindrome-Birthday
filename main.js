@@ -33,8 +33,8 @@ function convertDateToString(date){
     return dateStr;
 }
 var date={
-    day: 14,
-    month: 9,
+    day: 2,
+    month: 2,
     year: 2020
 }
 console.log(convertDateToString(date));
@@ -52,3 +52,17 @@ function getAllDateFormats(date){
     return [ddmmyyyy, mmddyyyy, yyyymmdd, ddmmyy, mmddyy, yymmdd];
 }
 console.log(getAllDateFormats(date));
+
+function checkPalindromeForAllDateFormats(date){
+    var listOfAllDateFormats = getAllDateFormats(date);
+    var flag = false;
+
+    for(var i = 0; i < listOfAllDateFormats.length; i++){
+        if(isPalindrome(listOfAllDateFormats[i])){
+            flag = true;
+            break;
+        }
+    }
+    return flag;
+}
+console.log(checkPalindromeForAllDateFormats(date));
