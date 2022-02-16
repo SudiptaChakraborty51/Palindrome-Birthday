@@ -110,3 +110,17 @@ function getNextDate(date){
 }
 console.log(convertDateToString(getNextDate(date)));
 
+function getNextPalindromeDate(date){
+    var count = 0;
+    var nextDate = getNextDate(date);
+    while(1){
+        count++;
+        if(checkPalindromeForAllDateFormats(nextDate)){
+            break;
+        } 
+        nextDate = getNextDate(nextDate);
+    }
+    return [count, nextDate];
+}
+
+console.log(getNextPalindromeDate(date));
