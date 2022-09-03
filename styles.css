@@ -7,6 +7,7 @@
 
 body {
     font-family: 'Open Sans', sans-serif;
+    margin: 0px;
 }
 
 h1 {
@@ -75,6 +76,7 @@ footer {
     background-color: var(--light-blue);
     text-align: center;
     padding: 1rem 0rem 0rem 1rem;
+    margin-top: 3rem;
 }
 
 .footer-list {
