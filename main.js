@@ -128,14 +128,19 @@ var dobInputRef = document.querySelector('#dob-input');
 var showBtnRef = document.querySelector('#show-btn');
 var resultRef = document.querySelector('#result');
 var errorRef = document.querySelector('#error');
+var loadingGif = document.querySelector("#loading");
 
 showBtnRef.addEventListener('click', clickHandler);
 
 function clickHandler(e) {
+    loadingGif.style.display="block";
+    loadingGif.innerHTML="<img src='/images/loading.gif'>";
+    resultRef.style.display="none";
+    resultRef.innerText="";
     var dobStr = dobInputRef.value;
     if (dobStr !== '') {
         errorRef.style.display = "none";
-        resultRef.style, display = "block";
+        resultRef.style.display = "block";
         var listOfDate = dobStr.split('-');
         var date = {
             day: Number(listOfDate[2]),
@@ -143,14 +148,23 @@ function clickHandler(e) {
             year: Number(listOfDate[0])
         };
         if (checkPalindromeForAllDateFormats(date)) {
-            resultRef.innerText = "Yay! Your Birthday is a Palindrome!!🤩";
+            setTimeout(()=>{
+                loadingGif.style.display="none";
+                resultRef.style.display="block";
+                resultRef.innerText = "Yay! Your Birthday is a Palindrome!!🤩";
+            }, 2000); 
         } else {
-            var [count, nextDate] = getNextPalindromeDate(date);
-            resultRef.innerText = `The next Palindrome date is ${nextDate.day}-${nextDate.month}-${nextDate.year}, you missed it by ${count} days!😔`;
+            setTimeout(()=>{
+                loadingGif.style.display="none";
+                resultRef.style.display="block";
+                var [count, nextDate] = getNextPalindromeDate(date);
+                resultRef.innerText = `The next Palindrome date is ${nextDate.day}-${nextDate.month}-${nextDate.year}, you missed it by ${count} days!😔`;
+            },2000);
         }
     } else {
         errorRef.style.display = "block";
-        resultRef.style, display = "none";
+        resultRef.style.display = "none";
+        loadingGif.style.display="none";
         errorRef.innerText = "Please enter the date of birth!";
     }
 }
