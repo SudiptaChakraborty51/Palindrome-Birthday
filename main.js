@@ -124,6 +124,49 @@ function getNextPalindromeDate(date) {
 }
 console.log(getNextPalindromeDate(date));
 
+function getPreviousDate(date) {
+    var day = date.day - 1;
+    var month = date.month;
+    var year = date.year;
+    var daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    if(day === 0){
+        month--;
+        if(month === 0){
+            month = 12;
+            day = 31;
+            year--;
+        } else if(month === 2){
+            if(leapYear(year)){
+                day = 29;
+            } else{
+                day = 28;
+            }
+        } else{
+            day = daysInMonth[month - 1];
+        }
+    }
+    return {
+        day: day,
+        month: month,
+        year: year
+    };
+}
+console.log(convertDateToString(getPreviousDate(date)));
+
+function getPreviousPalindromeDate(date) {
+    var count = 0;
+    var previousDate = getPreviousDate(date);
+    while (1) {
+        count++;
+        if (checkPalindromeForAllDateFormats(previousDate)) {
+            break;
+        }
+        previousDate = getPreviousDate(previousDate);
+    }
+    return [count, previousDate];
+}
+console.log(getPreviousPalindromeDate(date));
+
 var dobInputRef = document.querySelector('#dob-input');
 var showBtnRef = document.querySelector('#show-btn');
 var resultRef = document.querySelector('#result');
@@ -157,8 +200,13 @@ function clickHandler(e) {
             setTimeout(()=>{
                 loadingGif.style.display="none";
                 resultRef.style.display="block";
-                var [count, nextDate] = getNextPalindromeDate(date);
-                resultRef.innerText = `The next Palindrome date is ${nextDate.day}-${nextDate.month}-${nextDate.year}, you missed it by ${count} days!😔`;
+                var [count1, nextDate] = getNextPalindromeDate(date);
+                var [count2, previousDate] = getPreviousPalindromeDate(date);
+                if(count1>count2){
+                    resultRef.innerText = `The nearest palindrome date is ${previousDate.day}-${previousDate.month}-${previousDate.year}, you missed by ${count2} days!😔`;
+                } else{
+                    resultRef.innerText = `The nearest palindrome date is ${nextDate.day}-${nextDate.month}-${nextDate.year}, you missed it by ${count1} days!😔`;
+                }
             },2000);
         }
     } else {
